@@ -1,0 +1,29 @@
+<html lang="en-US">
+<head>
+    <title>Survey Analysis</title>
+</head>
+
+<body>
+    <h1>Survey analysis</h1>
+    <% var numberOfMales = 0; %>
+    <ul>
+        <% for (var i=0; i<results.length; i++){ %>
+            <li>SURVEY <%= i +1 %></li>
+            <li>Full Name : <%= results[i].fullName %></li>
+            <li>Gender : <%= results[i].gender %></li>                
+            <li>Email : <%= results[i].email %></li>
+            <li>Frequency of Use : <%= results[i].howoften %></li>
+            <li>Site Survey : <%= results[i].siteSurvey %></li>
+            <li>Comments : <%= results[i].moreComments %></li>
+            <br>
+        <% } %>    
+    </ul>
+
+    <h1>Conglomerate Results</h1>
+    <ul>
+        <li>Number of Males: <%= numMales %></li>
+        <li>Number of Females: <%= numFemales %></li>
+        <li>Number of Other: <%= numOther %></li>
+    </ul>
+</body>
+</html>

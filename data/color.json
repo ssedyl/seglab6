@@ -1,0 +1,1 @@
+[{"color":"Red","count":12},{"color":"Green","count":13},{"color":"Blue","count":7},{"color":["Red","Green","Blue"],"count":1}]
