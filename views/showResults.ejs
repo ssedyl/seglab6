@@ -4,7 +4,9 @@
 </head>
 
 <body>
-    <h1>Survey analysis</h1>
+    <h1>Survey Analysis</h1>
+
+    <h2>Surveys Submitted</h2>
     <% var numberOfMales = 0; %>
     <ul>
         <% for (var i=0; i<results.length; i++){ %>
@@ -15,15 +17,30 @@
             <li>Frequency of Use : <%= results[i].howoften %></li>
             <li>Site Survey : <%= results[i].siteSurvey %></li>
             <li>Comments : <%= results[i].moreComments %></li>
+            <li>Site needs improvement : <%= results[i].needsImprovement %></li>
             <br>
         <% } %>    
     </ul>
 
-    <h1>Conglomerate Results</h1>
+    <h2>Conglomerate Results</h2>
     <ul>
-        <li>Number of Males: <%= numMales %></li>
-        <li>Number of Females: <%= numFemales %></li>
-        <li>Number of Other: <%= numOther %></li>
+        <li>Number of Male participants: <%= numMales %></li>
+        <li>Number of Female participants: <%= numFemales %></li>
+        <li>Number of Other participants: <%= numOther %></li>
+        <br>
+        <li>Number of daily visitors: <%= numVisit.dailyFreq %></li>
+        <li>Number of weekly visitors: <%= numVisit.weeklyFreq %></li>
+        <li>Number of monthly visitors: <%= numVisit.monthlyFreq %></li>
+        <li>Number of yearly visitors: <%= numVisit.yearlyFreq %></li>
+        <li>Number of never visitors: <%= numVisit.neverFreq %></li>
+        <br>
+        <li>Number of participants stating that the website was easy to use: <%= sitesurveyresults.easyFreq %></li>
+        <li>Number of participants stating that the information presented is useful: <%= sitesurveyresults.usefulFreq %></li>
+        <li>Number of participants stating that the color scheme is nice: <%= sitesurveyresults.colorFreq %></li>
+        <li>Number of participants stating that the website easy to navigate: <%= sitesurveyresults.easynavFreq %></li>
+        <br>
+        <li>Does the website need improvement? (0 = no, 10 = yes): <%= impAvg %></li>
+
     </ul>
 </body>
 </html>

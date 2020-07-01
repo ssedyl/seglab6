@@ -2,6 +2,7 @@
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 var fs = require('fs');
+const { info } = require('console');
 
 // read the data file
 function readData(fileName){
@@ -66,6 +67,77 @@ function getNumberOfOther(arr){
     return count;
 }
 
+function getFrequency(arr){
+    let daily = 0;
+    let weekly = 0;
+    let monthly = 0;
+    let yearly = 0;
+    let never = 0;
+    for(let i = 0; i < arr.length; i++){
+        if(arr[i].howoften == 'daily'){
+            daily++;
+        } else if(arr[i].howoften == 'monthly'){
+            monthly++;
+        } else if(arr[i].howoften == 'yearly'){
+            yearly++;
+        } else if(arr[i].howoften == 'weekly'){
+            weekly++;
+        } else {
+            never++;
+        }
+    }
+    let res = {dailyFreq: daily, weeklyFreq: weekly, monthlyFreq:monthly, yearlyFreq: yearly, neverFreq: never};
+    return res;
+}
+
+function getSiteSurvey(arr){
+    let easy = 0;
+    let useful = 0;
+    let color = 0;
+    let easynav = 0;
+    for(let i = 0; i < arr.length; i++){
+        let sur = arr[i].siteSurvey;
+        console.log("length of site survey for survey " + i + " is: " + sur.length);
+        console.log("this site survey contains: " + sur);
+        console.log("type: " + typeof(sur));
+
+        if(sur instanceof Object){
+            for(let j = 0; j < sur.length; j++){
+                if(sur[j] == 'easyToUse'){
+                    easy++;
+                } else if(sur[j] == 'infoGood'){
+                    useful++;
+                } else if(sur[j] == 'colorScheme'){
+                    color++;
+                } else if(sur[j] == 'navigationEasy'){
+                    easynav++;
+                }
+            }
+        } else {
+            if(sur == 'easyToUse'){
+                easy++;
+            } else if(sur == 'infoGood'){
+                useful++;
+            } else if(sur == 'colorScheme'){
+                color++;
+            } else if(sur == 'navigationEasy'){
+                easynav++;
+            }
+        }
+    }
+    let res = {easyFreq: easy, usefulFreq: useful, colorFreq: color, easynavFreq: easynav};
+    return res;
+}
+
+function getImprovementAverage(arr){
+    let count = 0;
+    for(let i = 0; i < arr.length; i++){
+        count += parseInt(arr[i].needsImprovement);
+    }
+    let avg = 0;
+    avg = (count / arr.length).toFixed(2);
+    return avg;
+}
 
 // This is the controler per se, with the get/post
 module.exports = function(app){
@@ -78,10 +150,16 @@ module.exports = function(app){
         var numberOfMales = getNumberOfMales(infoToDisplay);
         var numberOfFemales = getNumberOfFemales(infoToDisplay);
         var numberOfOther = getNumberOfOther(infoToDisplay);
+        var freqVisit = getFrequency(infoToDisplay);
+        var siteSurveyRes = getSiteSurvey(infoToDisplay);
+        var avgRes = getImprovementAverage(infoToDisplay);
         res.render('showResults', {results: infoToDisplay, 
                                 numMales: numberOfMales,
                                 numFemales: numberOfFemales,
-                                numOther: numberOfOther
+                                numOther: numberOfOther,
+                                numVisit: freqVisit,
+                                sitesurveyresults: siteSurveyRes,
+                                impAvg: avgRes
                                 });
         console.log([infoToDisplay]);
     });
@@ -99,6 +177,8 @@ module.exports = function(app){
         console.log(req.body);
         var json = req.body;
         updateFile(json);
+
+
         // for (var key in json){
         //     console.log(key + ": " + json[key]);
         //     // in the case of checkboxes, the user might check more than one
