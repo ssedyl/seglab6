@@ -178,19 +178,6 @@ module.exports = function(app){
         var json = req.body;
         updateFile(json);
 
-
-        // for (var key in json){
-        //     console.log(key + ": " + json[key]);
-        //     // in the case of checkboxes, the user might check more than one
-        //     if ((key === "color") && (json[key].length === 2)){
-        //         for (var item in json[key]){
-        //             combineCounts(key, json[key][item]);
-        //         }
-        //     }
-        //     else {
-        //         combineCounts(key, json[key]);
-        //     }
-        // }
         // mystery line... (if I take it out, the SUBMIT button does change)
         // if anyone can figure this out, let me know!
         res.sendFile(__dirname + "/views/niceSurvey.html");
